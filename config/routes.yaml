@@ -8,3 +8,8 @@ controllers:
 app_register:
     path: /register
     controller: App\Controller\RegisterController::index
+
+app_random_word:
+    path: /random-word
+    controller: App\Controller\WordsController::getRandomWord
+    methods: ['GET']

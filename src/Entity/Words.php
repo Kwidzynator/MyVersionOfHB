@@ -33,10 +33,4 @@ class Words
         return $this->word;
     }
 
-    public function setWord(string $word): static
-    {
-        $this->word = $word;
-
-        return $this;
-    }
 }

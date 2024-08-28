@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Words;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -11,6 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class WordsRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Words::class);

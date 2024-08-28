@@ -11,6 +11,8 @@ class WordsController extends AbstractController
     #[Route('/words', name: 'app_words')]
     public function index(): Response
     {
+
+
         return $this->render('games/words.html.twig', [
             'controller_name' => 'WordsController',
         ]);
