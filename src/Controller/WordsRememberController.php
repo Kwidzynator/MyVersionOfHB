@@ -29,12 +29,13 @@ class WordsRememberController extends AbstractController
             $session->set utala wartość dla danej sesji którą można sobie przekazywać
             dzięki czemu mogę też przekazywać wartości o uzyskanym wyniku
         */
-        $session->set('health_left', 3);
+
+        $session->set('health_left', 4);
         $session->set('word_list', $queue);
         $session->set('used_words', new SplQueue());
-        $session->set('streak', 0);
+        $session->set('score', 0);
 
-        return $this->render('games/wordsRemember.html.twig', [
+        return $this->render('games/wordsRemembering/wordsRemember.html.twig', [
             'controller_name' => 'WordsController',
         ]);
     }
@@ -61,12 +62,11 @@ class WordsRememberController extends AbstractController
                 $nextWord = 'avocado';
             }
         }
-        $streak = $session->get('streak');
+        $streak = $session->get('score');
 
-        $session->set('streak', $streak + 1);
+        $session->set('score', $streak + 1);
         $session->set('last_word', $nextWord);
         $session->set('word_list', $wordList);
-        $session->set('used_words', $usedWords);
 
         return new JsonResponse([
             'word' => $nextWord,
@@ -81,17 +81,35 @@ class WordsRememberController extends AbstractController
 
         if ($wordList->isEmpty()) {
 
-            return new JsonResponse(['correct' => false], 400); // in case of list being empty, which is unlikely to happen but ye
+            return new JsonResponse(['correct' => false], 400);
         }
 
         $currentWord = $session->get('last_word');
 
         $isCorrect = in_array($currentWord, iterator_to_array($usedWords));
 
-        if(!$isCorrect) {
-            $usedWords->enqueue($currentWord);
+        return new JsonResponse(['correct' => $isCorrect]);
+    }
+    //two different to make it easier to edit if wanted
+    #[Route('/new', name: 'app_new')]
+    public function new(SessionInterface $session): JsonResponse
+    {
+        $usedWords = $session->get('used_words', []);
+        $wordList = $session->get('word_list', new SplQueue());
+
+        if ($wordList->isEmpty()) {
+
+            return new JsonResponse(['correct' => false], 400);
         }
 
+        $currentWord = $session->get('last_word');
+
+        $isCorrect = in_array($currentWord, iterator_to_array($usedWords));
+
+        if(!$isCorrect){
+            $usedWords[] = $currentWord;
+            $session->set('used_words', $usedWords);
+        }
         return new JsonResponse(['correct' => $isCorrect]);
     }
 
@@ -109,6 +127,26 @@ class WordsRememberController extends AbstractController
         return new JsonResponse([
             'status' => 'still_in_game',
             'health' => $health - 1
+        ]);
+    }
+    #[Route('/get_score', name: 'app_score')]
+    public function getScore(SessionInterface $session): JsonResponse{
+        return new JsonResponse([
+            'score' => $session->get('score')
+        ]);
+    }
+
+    /** coming back to menu */
+    #[Route('/back_to_the_pit', name: 'app_menu')]
+    public function goBack(SessionInterface $session): Response{
+        return $this->redirectToRoute('app_login_succeed');
+
+    }
+    #[Route('/save_score_wordRem', name: 'app_save_score_wordRem')]
+    public function saveScore(SessionInterface $session): JsonResponse{
+
+        Return new JsonResponse([
+            'error'
         ]);
     }
 }

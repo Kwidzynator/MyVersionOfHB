@@ -18,7 +18,7 @@ class WordsRemembering
     private ?int $user_id = null;
 
     #[ORM\Column]
-    private ?int $moves = null;
+    private ?int $score = null;
 
     public function getId(): ?int
     {
@@ -44,14 +44,14 @@ class WordsRemembering
         return $this;
     }
 
-    public function getMoves(): ?int
+    public function getScore(): ?int
     {
-        return $this->moves;
+        return $this->score;
     }
 
-    public function setMoves(int $moves): static
+    public function setScore(int $score): static
     {
-        $this->moves = $moves;
+        $this->score = $score;
 
         return $this;
     }

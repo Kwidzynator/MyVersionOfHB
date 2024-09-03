@@ -37,7 +37,7 @@ class WordsRememberingRepository extends ServiceEntityRepository
         }
     }
 
-    /** over here we simply prepare our words to be drew */
+    /** over here we simply prepare our words to be drawn */
     private function drawing() : ?string{
         $entityManager = $this->getEntityManager();
 
