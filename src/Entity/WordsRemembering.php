@@ -11,7 +11,7 @@ class WordsRemembering
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $place = null;
 
     #[ORM\ManyToOne(targetEntity: Login::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -20,14 +20,14 @@ class WordsRemembering
     #[ORM\Column]
     private ?int $score = null;
 
-    public function getId(): ?int
+    public function getPlace(): ?int
     {
-        return $this->id;
+        return $this->place;
     }
 
-    public function setId(int $id): static
+    public function setPlace(int $place): static
     {
-        $this->id = $id;
+        $this->place = $place;
 
         return $this;
     }

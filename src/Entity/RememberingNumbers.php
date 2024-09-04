@@ -13,9 +13,9 @@ class RememberingNumbers
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Login::class)]
+    #[ORM\ManyToOne(targetEntity: Login::class, inversedBy: 'rememberingNumbers')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user_id = null;
+    private ?Login $user = null; // Reference to Login entity
 
     #[ORM\Column]
     private ?int $numbers_remembered = null;
@@ -25,21 +25,14 @@ class RememberingNumbers
         return $this->id;
     }
 
-    public function setId(int $id): static
+    public function getUser(): ?Login
     {
-        $this->id = $id;
-
-        return $this;
+        return $this->user;
     }
 
-    public function getUserId(): ?int
+    public function setUser(?Login $user): static
     {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): static
-    {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }

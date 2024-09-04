@@ -8,27 +8,36 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RegisterController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function index(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $passwordHasher
+    ): Response {
         $user = new Login();
         $form = $this->createForm(RegisterFormType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
+            // Hash the password before saving it to the database
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $user->getPassword()
+            );
+            $user->setPassword($hashedPassword);
+            $user->setRole("ROLE_USER");
             $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_default');
         }
-
 
         return $this->render('default/register.html.twig', [
             'registerForm' => $form->createView(),

@@ -94,6 +94,12 @@ document.getElementById('try-again').addEventListener('click', function() {
     location.reload();
 });
 
+document.getElementById('save-result').addEventListener('click', function(){
+
+
+
+})
+
 //in case of being wrong we update health on screen here
 function updateHealthDisplay(health) {
     document.getElementById('health-left').innerText = health;

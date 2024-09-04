@@ -1,0 +1,37 @@
+security:
+    # Define password hashers
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    # Define providers
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\Login
+                property: email
+
+    # Define firewalls
+    firewalls:
+        main:
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                login_path: app_default
+                check_path: app_login_check
+                default_target_path: app_login_succeed
+            logout:
+                path: app_logout
+                target: app_default
+
+    # Define access control rules
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/home, roles: ROLE_USER }
+        - { path: ^/reflex, roles: ROLE_USER }
+        - { path: ^/wordsRemembering, roles: ROLE_USER }
+        - { path: ^/nextWord, roles: ROLE_USER }
+        - { path: ^/seen, roles: ROLE_USER }
+        - { path: ^/new, roles: ROLE_USER }
+        - { path: ^/set_health, roles: ROLE_USER }
+        - { path: ^/get_score, roles: ROLE_USER }
