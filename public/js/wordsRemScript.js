@@ -94,11 +94,31 @@ document.getElementById('try-again').addEventListener('click', function() {
     location.reload();
 });
 
-document.getElementById('save-result').addEventListener('click', function(){
+document.getElementById('save-result').addEventListener('click', function() {
 
-
-
-})
+    fetch('/save_score_wordRem', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({})
+    })
+        .then(response => response.json()) // Convert response to JSON
+        .then(data => {
+            console.log('Response data:', data); // Log the data to inspect it
+            if (data.success) {
+                console.log('Score saved successfully!', data);
+                alert('Score saved successfully!');
+            } else {
+                console.log('Error:', data.error);
+                alert('Error saving score: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error saving score');
+        });
+});
 
 //in case of being wrong we update health on screen here
 function updateHealthDisplay(health) {

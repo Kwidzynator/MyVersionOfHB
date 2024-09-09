@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\WordsRemembering;
 use App\Repository\WordsRememberingRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use SplQueue;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-
+use App\Entity\Login;
 class WordsRememberController extends AbstractController
 {
     #[Route('/wordsRemembering', name: 'app_wordsRemembering')]
@@ -20,17 +23,10 @@ class WordsRememberController extends AbstractController
         $queue = new SplQueue();
 
 
-        // Generowanie listy losowych słów
         for ($i = 0; $i < 230; $i++) {
             $randomWord = $repository->randomWord();
             $queue->enqueue($randomWord);
         }
-
-        /* wyjaśnienie dla mnie
-            jeśli rozumiem dobrze to tak:
-            $session->set utala wartość dla danej sesji którą można sobie przekazywać
-            dzięki czemu mogę też przekazywać wartości o uzyskanym wyniku
-        */
 
         $session->set('health_left', 4);
         $session->set('word_list', $queue);
@@ -146,16 +142,40 @@ class WordsRememberController extends AbstractController
     /** coming back to menu */
     #[Route('/back_to_the_pit', name: 'app_menu')]
     #[IsGranted('ROLE_USER')]
-    public function goBack(SessionInterface $session): Response{
+    public function goBack(): Response{
         return $this->redirectToRoute('app_login_succeed');
 
     }
     #[Route('/save_score_wordRem', name: 'app_save_score_wordRem')]
     #[IsGranted('ROLE_USER')]
-    public function saveScore(SessionInterface $session): JsonResponse{
+    public function saveScore(SessionInterface $session, EntityManagerInterface $entityManager): JsonResponse
+    {
+        /** @var Login $user */
+        $user = $this->getUser();
 
-        Return new JsonResponse([
-            'error'
+        if (!$user instanceof UserInterface) {
+            dump($user);
+            return new JsonResponse(['error' => 'User not found'], 400);
+        }
+
+        $score = $session->get('score');
+        if ($score === null) {
+            dump($score);
+            return new JsonResponse(['error' => 'Score not found in session'], 400);
+        }
+
+        $entity = new WordsRemembering();
+        $entity->setScore($score);
+        $entity->setUser($user);
+
+        $entityManager->persist($entity);
+        $entityManager->flush();
+
+        return new JsonResponse([
+            'success' => true,
+            'user_id' => $user->getId(),
+            'score' => $score,
         ]);
     }
+
 }

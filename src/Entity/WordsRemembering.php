@@ -11,38 +11,34 @@ class WordsRemembering
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $place = null;
+    private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Login::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user_id = null;
+    private ?Login $user = null;
 
     #[ORM\Column]
     private ?int $score = null;
 
-    public function getPlace(): ?int
+
+    public function getId(): ?int
     {
-        return $this->place;
+        return $this->id;
     }
 
-    public function setPlace(int $place): static
+
+    public function getUser(): ?Login
     {
-        $this->place = $place;
+        return $this->user;
+    }
+
+    public function setUser(Login $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): static
-    {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
 
     public function getScore(): ?int
     {

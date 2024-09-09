@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ReactionTimeRepository::class)]
 class ReactionTime
 {
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $time = null;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -16,10 +19,19 @@ class ReactionTime
 
     #[ORM\ManyToOne(targetEntity: Login::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?int $user_id = null;
+    private ?Login $user = null; // Correct type for the ManyToOne relationship
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $time = null;
+    public function getTime(): ?\DateTimeInterface
+    {
+        return $this->time;
+    }
+
+    public function setTime(\DateTimeInterface $time): static
+    {
+        $this->time = $time;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -33,27 +45,16 @@ class ReactionTime
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getUser(): ?Login
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(int $user_id): static
+    public function setUser(Login $user): static
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getTime(): ?\DateTimeInterface
-    {
-        return $this->time;
-    }
-
-    public function setTime(\DateTimeInterface $time): static
-    {
-        $this->time = $time;
-
-        return $this;
-    }
 }

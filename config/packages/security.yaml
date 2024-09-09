@@ -26,7 +26,6 @@ security:
     # Define access control rules
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/home, roles: ROLE_USER }
         - { path: ^/reflex, roles: ROLE_USER }
         - { path: ^/wordsRemembering, roles: ROLE_USER }
