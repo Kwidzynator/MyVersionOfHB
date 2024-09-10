@@ -27,10 +27,14 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/home, roles: ROLE_USER }
-        - { path: ^/reflex, roles: ROLE_USER }
+
         - { path: ^/wordsRemembering, roles: ROLE_USER }
         - { path: ^/nextWord, roles: ROLE_USER }
         - { path: ^/seen, roles: ROLE_USER }
         - { path: ^/new, roles: ROLE_USER }
         - { path: ^/set_health, roles: ROLE_USER }
         - { path: ^/get_score, roles: ROLE_USER }
+        - { path: ^/reflex, roles: ROLE_USER }
+        - { path: ^/screenChangingTime, roles: ROLE_USER }
+        - { path: ^/startTimer, roles: ROLE_USER }
+        - { path: ^/stopTimer, roles: ROLE_USER }

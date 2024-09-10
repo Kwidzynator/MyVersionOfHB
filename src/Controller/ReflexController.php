@@ -7,10 +7,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 class ReflexController extends AbstractController
 {
     #[Route('/reflex', name: 'app_reflex')]
-    public function index(SessionInterface $session) : Response
+    #[IsGranted('ROLE_USER')]
+    public function index() : Response
     {
 
         return $this->render('games/reflex.html.twig', [
@@ -18,8 +21,9 @@ class ReflexController extends AbstractController
         ]);
     }
 
-    #[Route('/screen_changing_time', name: 'app_screen_changing_time')]
-    public function changingTime(SessionInterface $session) : JsonResponse
+    #[Route('/screenChangingTime', name: 'app_screen_changing_time')]
+    #[IsGranted('ROLE_USER')]
+    public function changingTime() : JsonResponse
     {
         //two variables for making it easier to read
         $seconds = rand(4, 13);
@@ -29,7 +33,8 @@ class ReflexController extends AbstractController
         return new JsonResponse(['time_to_start' => $seconds, 'miliseconds' => $miliseconds]);
     }
 
-    #[Route('/start_timer', name: 'app_start_timer')]
+    #[Route('/startTimer', name: 'app_start_timer')]
+    #[IsGranted('ROLE_USER')]
     public function startTimer(SessionInterface $session): JsonResponse
     {
         // Capture current time in seconds with microsecond precision
@@ -41,7 +46,8 @@ class ReflexController extends AbstractController
         return new JsonResponse(['status' => 'Timer started']);
     }
 
-    #[Route('/stop_timer', name: 'app_stop_timer')]
+    #[Route('/stopTimer', name: 'app_stop_timer')]
+    #[IsGranted('ROLE_USER')]
     public function stopTimer(SessionInterface $session): JsonResponse
     {
         // Retrieve the start time from the session
@@ -58,5 +64,11 @@ class ReflexController extends AbstractController
         $elapsedTime = ($endTime - $startTime) * 1000; // Convert seconds to milliseconds
 
         return new JsonResponse(['elapsed_time_ms' => $elapsedTime]);
+    }
+    #[Route('/back_to_the_pit', name: 'app_menu')]
+    #[IsGranted('ROLE_USER')]
+    public function goBack(): Response{
+        return $this->redirectToRoute('app_login_succeed');
+
     }
 }

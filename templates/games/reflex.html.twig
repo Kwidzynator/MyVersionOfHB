@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('css/reflexStyle.css') }}">
+
+    <div class="reflex_site" id="content">
+        <h1>RULES</h1>
+        <h2>After pressing "ready", you will see green screen, when the colour change into red press left mouse button,
+            as quickly as possible.<br> </h2>
+        <h3>Press "ready" button to start</h3>
+        <button id="ready-button">Ready</button>
+    </div>
+
+    <div id="game-panel" style="display: none;">
+    </div>
+
+    <div id="game-over-panel">
+        <p id="reaction-time-text"></p>
+        <div class="button-container">
+            <button id="save-score-button">Save Score</button>
+            <button id="replay-button">Replay</button>
+        </div>
+        <button id="game-over-menu">Menu</button>
+    </div>
+
+    <script src="{{ asset('js/reflexScript.js') }}"></script>
+{% endblock %}
