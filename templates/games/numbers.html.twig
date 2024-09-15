@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('css/numbersStyle.css') }}">
+
+    <div class="numbers_site" id="content">
+        <h1>RULES</h1>
+        <h2>You are going to see numbers, you have few seconds to remember exactly the same number and type it.
+            The longer number is the more time you will have.<br> </h2>
+        <h3>Press "ready" button to start</h3>
+        <button id="ready-button">Ready</button>
+    </div>
+
+    <div id="game-panel" style="display: none;">
+        <p id="number-shown"></p>
+    </div>
+
+    <div id="typing-panel">
+        <label id = "typing-area-label" for="typing-area" class="sr-only"></label>
+        <input type="text" id="typing-area" autofocus>
+        <button id = "answer-button"> submit </button>
+
+    </div>
+
+
+    <div id="game-over-panel">
+        <h1>Sorry to tell you, but you have lost :c </h1>
+        <h1>Your score: <span id="score"></span> </h1>
+
+        <div class="button-container">
+            <button id="save-score-button">Save Score</button>
+            <button id="replay-button">Replay</button>
+        </div>
+
+        <button id="game-over-menu">Menu</button>
+    </div>
+
+    <script src="{{ asset('js/numbersScript.js') }}"></script>
+{% endblock %}

@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\ReactionTimeRepository;
-use Doctrine\DBAL\Types\Types;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReactionTimeRepository::class)]
 class ReactionTime
 {
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $time = null;
+    #[ORM\Column(type: 'float')]
+    private ?float $time = null;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,12 +21,12 @@ class ReactionTime
     #[ORM\JoinColumn(nullable: false)]
     private ?Login $user = null; // Correct type for the ManyToOne relationship
 
-    public function getTime(): ?\DateTimeInterface
+    public function getTime(): float
     {
         return $this->time;
     }
 
-    public function setTime(\DateTimeInterface $time): static
+    public function setTime(float $time): static
     {
         $this->time = $time;
 

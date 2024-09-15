@@ -1,0 +1,92 @@
+{# templates/default/statistics.html.twig #}
+
+<link rel="stylesheet" href="{{ asset('css/statsStyle.css') }}">
+
+<div class="button-container">
+    <button id="words_stats">Words Stats</button>
+    <button id="numbers_stats">Numbers Stats</button>
+    <button id="reflex_stats">Reflex Stats</button>
+    <button id="personal_stats">Personal Stats</button>
+</div>
+
+
+<div class="stats-container words_remembering_stats" id="words_label">
+    <h1>Words Remembering Statistics</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for record in wordsRecords %}
+            <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.user.login }}</td>
+                <td>{{ record.score }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="stats-container numbers_stats" id="numbers_label" style="display: none;">
+    <h1>Numbers Statistics</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Numbers Remembered</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for record in numbersRecords %}
+            <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.user.login }}</td>
+                <td>{{ record.getNumbersRemembered() }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<div class="stats-container reflex_stats" id="reflex_label" style="display: none;">
+    <h1>Reflex Statistics</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for record in reflexRecords %}
+            <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.user.login }}</td>
+                <td>{{ record.time }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script src="{{ asset('js/statsScript.js') }}"></script>

@@ -173,8 +173,6 @@ class WordsRememberController extends AbstractController
 
         return new JsonResponse([
             'success' => true,
-            'user_id' => $user->getId(),
-            'score' => $score,
         ]);
     }
 

@@ -13,7 +13,7 @@ function game() {
             const milliseconds = data.miliseconds;
             const totalDelay = (seconds * 1000) + milliseconds;
 
-            console.log(`Waiting for ${seconds} seconds and ${milliseconds} milliseconds`);
+            //console.log(`Waiting for ${seconds} seconds and ${milliseconds} milliseconds`);
 
             document.getElementById('game-panel').style.backgroundColor = 'green';
 
@@ -50,14 +50,35 @@ function stopTimer() {
 }
 
 document.getElementById('save-score-button').addEventListener('click', function() {
-    console.log('Save score button clicked');
+
+    fetch('/save_score_reflex', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({})
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response data:', data);
+            if (data.success) {
+                console.log('Score saved successfully!', data);
+                alert('Score saved successfully!');
+            } else {
+                console.log('Error:', data.error);
+                alert('Error saving score: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error saving score');
+        });
 
 });
 
 document.getElementById('replay-button').addEventListener('click', function() {
     location.reload();
 });
-
 document.getElementById('game-over-menu').addEventListener('click', function ()
 {
     fetch('/back_to_the_pit', {
@@ -69,3 +90,4 @@ document.getElementById('game-over-menu').addEventListener('click', function ()
     });
 
 });
+

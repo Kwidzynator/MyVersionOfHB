@@ -15,7 +15,7 @@ class RememberingNumbers
 
     #[ORM\ManyToOne(targetEntity: Login::class, inversedBy: 'rememberingNumbers')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Login $user = null; // Reference to Login entity
+    private ?Login $user = null;
 
     #[ORM\Column]
     private ?int $numbers_remembered = null;
