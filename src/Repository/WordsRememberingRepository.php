@@ -60,4 +60,5 @@ class WordsRememberingRepository extends ServiceEntityRepository
         }
     }
 
+
 }

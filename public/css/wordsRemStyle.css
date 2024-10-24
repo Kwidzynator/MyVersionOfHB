@@ -22,7 +22,7 @@
     cursor: pointer;
 }
 
-/* Styl dla #game-panel */
+
 #game-panel {
     display: flex;
     flex-direction: column;

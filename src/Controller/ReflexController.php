@@ -90,14 +90,14 @@ class ReflexController extends AbstractController
             return new JsonResponse(['error' => 'User not found'], 400);
         }
 
-        // Retrieve the reflex time from the session
+
         $reflexTime = $session->get('elapsed_time');
 
         if ($reflexTime === null) {
             return new JsonResponse(['error' => 'No reflex time found in session'], 400);
         }
 
-        // Create and persist the new ReactionTime entity
+
         $entity = new ReactionTime();
         $entity->setUser($user);
         $entity->setTime($reflexTime);

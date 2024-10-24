@@ -17,12 +17,12 @@ class StatisticsController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        // Fetching all the records from different repositories
+
         $wordsRememberingRecords = $entityManager->getRepository(WordsRemembering::class)->findAll();
         $numbersRememberingRecords = $entityManager->getRepository(RememberingNumbers::class)->findAll();
         $reflexStatsRecords = $entityManager->getRepository(ReactionTime::class)->findAll();
 
-        // Pass the data to the Twig template
+
         return $this->render('default/statistics.html.twig', [
             'wordsRecords' => $wordsRememberingRecords,
             'numbersRecords' => $numbersRememberingRecords,

@@ -21,26 +21,26 @@
     flex-direction: column;
 }
 
-/* Common Styles for Statistics Sections */
+
 .stats-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 70px; /* Adjust this to ensure the section is below the button container */
+    margin-top: 70px;
     padding-top: 30px;
     box-sizing: border-box;
     text-align: center;
 }
 
-/* Styles for Section Headings */
+
 .stats-container h1 {
     margin-bottom: 20px;
     font-size: 72px;
     font-weight: bold;
 }
 
-/* Styles for Tables */
+
 .stats-container table {
     border-collapse: collapse;
     width: 50%;
@@ -56,7 +56,7 @@
     text-align: center;
 }
 
-/* Styles for Screen Reader Only Element */
+
 .sr-only {
     position: absolute;
     width: 1px;

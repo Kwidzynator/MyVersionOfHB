@@ -26,7 +26,7 @@ class RegisterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hash the password before saving it to the database
+
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()

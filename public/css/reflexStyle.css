@@ -40,7 +40,7 @@
 }
 
 #game-over-panel {
-    display: none; /* Start with hidden and display only when needed */
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;

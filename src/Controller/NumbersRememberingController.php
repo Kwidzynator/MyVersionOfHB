@@ -107,7 +107,7 @@ class NumbersRememberingController extends AbstractController
                 return new JsonResponse(['error' => 'No reflex time found in session'], 400);
             }
 
-            // Create and persist the new ReactionTime entity
+
             $entity = new RememberingNumbers();
             $entity->setUser($user);
             $entity->setNumbersRemembered($score);
